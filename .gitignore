@@ -1,0 +1,4 @@
+*.pyc
+*~
+rates_tool.egg-info
+*.ipynb_checkpoints
