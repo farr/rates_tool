@@ -1,7 +1,15 @@
 import numpy as np
 
 class KDE(object):
+    """Gaussian KDE implementing Scott's rule for the bandwidth estimate.
+
+    """
+
     def __init__(self, pts):
+        """Given a ``(N,)`` or ``(N, Ndim)`` array of points, construct
+        the KDE estimating the density from which the points are
+        drawn.
+        """
         pts = np.atleast_1d(pts)
 
         if len(pts.shape) == 1:
@@ -26,6 +34,10 @@ class KDE(object):
         return self._cov
 
     def __call__(self, xs):
+        """Returns the log of the PDF represented by the KDE.
+
+        """
+
         xs = np.atleast_1d(xs)
 
         if self.ndim > 1:

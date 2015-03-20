@@ -1,0 +1,197 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>Welcome to Rates Tool’s documentation! &mdash; Rates Tool 1.0 documentation</title>
+    
+    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="top" title="Rates Tool 1.0 documentation" href="#" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="#">Rates Tool 1.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="welcome-to-rates-tool-s-documentation">
+<h1>Welcome to Rates Tool&#8217;s documentation!<a class="headerlink" href="#welcome-to-rates-tool-s-documentation" title="Permalink to this headline">¶</a></h1>
+<p>Contents:</p>
+<div class="toctree-wrapper compound">
+<ul class="simple">
+</ul>
+</div>
+<div class="section" id="module-rates_tool.kde">
+<span id="the-kde-module"></span><h2>The KDE Module<a class="headerlink" href="#module-rates_tool.kde" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="rates_tool.kde.KDE">
+<em class="property">class </em><tt class="descclassname">rates_tool.kde.</tt><tt class="descname">KDE</tt><big>(</big><em>pts</em><big>)</big><a class="reference internal" href="_modules/rates_tool/kde.html#KDE"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#rates_tool.kde.KDE" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">object</span></tt></p>
+<p>Gaussian KDE implementing Scott&#8217;s rule for the bandwidth estimate.</p>
+<dl class="attribute">
+<dt id="rates_tool.kde.KDE.N">
+<tt class="descname">N</tt><a class="reference internal" href="_modules/rates_tool/kde.html#KDE.N"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#rates_tool.kde.KDE.N" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="rates_tool.kde.KDE.cov">
+<tt class="descname">cov</tt><a class="reference internal" href="_modules/rates_tool/kde.html#KDE.cov"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#rates_tool.kde.KDE.cov" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="rates_tool.kde.KDE.ndim">
+<tt class="descname">ndim</tt><a class="reference internal" href="_modules/rates_tool/kde.html#KDE.ndim"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#rates_tool.kde.KDE.ndim" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="rates_tool.kde.KDE.pts">
+<tt class="descname">pts</tt><a class="reference internal" href="_modules/rates_tool/kde.html#KDE.pts"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#rates_tool.kde.KDE.pts" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-rates_tool.rate">
+<span id="the-rate-posterior"></span><h2>The Rate Posterior<a class="headerlink" href="#module-rates_tool.rate" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="rates_tool.rate.RatePosterior">
+<em class="property">class </em><tt class="descclassname">rates_tool.rate.</tt><tt class="descname">RatePosterior</tt><big>(</big><em>bgs</em>, <em>fg</em>, <em>coinc</em><big>)</big><a class="reference internal" href="_modules/rates_tool/rate.html#RatePosterior"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#rates_tool.rate.RatePosterior" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <tt class="xref py py-class docutils literal"><span class="pre">object</span></tt></p>
+<p>Posterior object for counting with confusion between foreground
+and background.</p>
+<dl class="attribute">
+<dt id="rates_tool.rate.RatePosterior.coinc">
+<tt class="descname">coinc</tt><a class="reference internal" href="_modules/rates_tool/rate.html#RatePosterior.coinc"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#rates_tool.rate.RatePosterior.coinc" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="attribute">
+<dt id="rates_tool.rate.RatePosterior.dtype">
+<tt class="descname">dtype</tt><a class="reference internal" href="_modules/rates_tool/rate.html#RatePosterior.dtype"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#rates_tool.rate.RatePosterior.dtype" title="Permalink to this definition">¶</a></dt>
+<dd><p>We use the log of the foreground and background rates, under
+the names <tt class="docutils literal"><span class="pre">log_Rf</span></tt> and <tt class="docutils literal"><span class="pre">log_Rb</span></tt> for parameters.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="rates_tool.rate.RatePosterior.log_fg">
+<tt class="descname">log_fg</tt><a class="reference internal" href="_modules/rates_tool/rate.html#RatePosterior.log_fg"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#rates_tool.rate.RatePosterior.log_fg" title="Permalink to this definition">¶</a></dt>
+<dd><p>The log of the foreground to background likelihood ratio.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="rates_tool.rate.RatePosterior.log_likelihood">
+<tt class="descname">log_likelihood</tt><big>(</big><em>p</em><big>)</big><a class="reference internal" href="_modules/rates_tool/rate.html#RatePosterior.log_likelihood"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#rates_tool.rate.RatePosterior.log_likelihood" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="rates_tool.rate.RatePosterior.log_prior">
+<tt class="descname">log_prior</tt><big>(</big><em>p</em><big>)</big><a class="reference internal" href="_modules/rates_tool/rate.html#RatePosterior.log_prior"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#rates_tool.rate.RatePosterior.log_prior" title="Permalink to this definition">¶</a></dt>
+<dd><p>The prior for each rate has a density in rate space of</p>
+<div class="math">
+\[p(R) \propto \frac{1}{\sqrt{R}}\]</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="rates_tool.rate.RatePosterior.to_params">
+<tt class="descname">to_params</tt><big>(</big><em>x</em><big>)</big><a class="reference internal" href="_modules/rates_tool/rate.html#RatePosterior.to_params"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#rates_tool.rate.RatePosterior.to_params" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</div>
+</div>
+<div class="section" id="indices-and-tables">
+<h1>Indices and tables<a class="headerlink" href="#indices-and-tables" title="Permalink to this headline">¶</a></h1>
+<ul class="simple">
+<li><a class="reference internal" href="genindex.html"><em>Index</em></a></li>
+<li><a class="reference internal" href="py-modindex.html"><em>Module Index</em></a></li>
+<li><a class="reference internal" href="search.html"><em>Search Page</em></a></li>
+</ul>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="#">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Welcome to Rates Tool&#8217;s documentation!</a><ul>
+<li><a class="reference internal" href="#module-rates_tool.kde">The KDE Module</a></li>
+<li><a class="reference internal" href="#module-rates_tool.rate">The Rate Posterior</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#indices-and-tables">Indices and tables</a></li>
+</ul>
+
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="_sources/index.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="#">Rates Tool 1.0 documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2015, Will M. Farr.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.3.
+    </div>
+  </body>
+</html>

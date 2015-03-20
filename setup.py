@@ -6,4 +6,5 @@ setup(name='rates_tool',
       author='Will M. Farr',
       author_email='will.farr@ligo.org',
       license='MIT',
-      packages=['rates_tool'])
+      packages=['rates_tool'],
+      scripts=['bin/rates.py'])

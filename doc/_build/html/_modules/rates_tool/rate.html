@@ -1,0 +1,185 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>rates_tool.rate &mdash; Rates Tool 1.0 documentation</title>
+    
+    <link rel="stylesheet" href="../../_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '../../',
+        VERSION:     '1.0',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <link rel="top" title="Rates Tool 1.0 documentation" href="../../index.html" />
+    <link rel="up" title="Module code" href="../index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../index.html">Rates Tool 1.0 documentation</a> &raquo;</li>
+          <li><a href="../index.html" accesskey="U">Module code</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <h1>Source code for rates_tool.rate</h1><div class="highlight"><pre>
+<span class="kn">import</span> <span class="nn">kde</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
+
+<div class="viewcode-block" id="RatePosterior"><a class="viewcode-back" href="../../index.html#rates_tool.rate.RatePosterior">[docs]</a><span class="k">class</span> <span class="nc">RatePosterior</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">&quot;&quot;&quot;Posterior object for counting with confusion between foreground</span>
+<span class="sd">    and background.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">bgs</span><span class="p">,</span> <span class="n">fg</span><span class="p">,</span> <span class="n">coinc</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Initialise the posterior.</span>
+
+<span class="sd">        :param bgs: List of ``(N, Ndim)`` arrays, each containing</span>
+<span class="sd">          background triggers in the ``Ndim``-dimensional classification</span>
+<span class="sd">          space for a detector.</span>
+
+<span class="sd">        :param fg: Array of shape ``(N, Ndet*Ndim)`` giving ``N``</span>
+<span class="sd">          samples from the combined foreground classification space on</span>
+<span class="sd">          ``Ndet`` detectors in ``Ndim`` dimensions.</span>
+
+<span class="sd">        :param coinc: Array of shape ``(Ncoinc, Ndet*Ndim)`` giving the</span>
+<span class="sd">          coincident events in all detectors.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+
+        <span class="n">bg_kdes</span> <span class="o">=</span> <span class="p">[</span><span class="n">kde</span><span class="o">.</span><span class="n">KDE</span><span class="p">(</span><span class="n">bg</span><span class="p">)</span> <span class="k">for</span> <span class="n">bg</span> <span class="ow">in</span> <span class="n">bgs</span><span class="p">]</span>
+        <span class="n">fg_kde</span> <span class="o">=</span> <span class="n">kde</span><span class="o">.</span><span class="n">KDE</span><span class="p">(</span><span class="n">fg</span><span class="p">)</span>
+
+        <span class="n">log_fg_ratios</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">for</span> <span class="n">coi</span> <span class="ow">in</span> <span class="n">coinc</span><span class="p">:</span>
+            <span class="n">log_bg</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">([</span><span class="n">bkde</span><span class="p">(</span><span class="n">c</span><span class="p">)</span> <span class="k">for</span> <span class="n">bkde</span><span class="p">,</span> <span class="n">c</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">bg_kdes</span><span class="p">,</span> <span class="n">coi</span><span class="p">)])</span>
+            <span class="n">log_fg</span> <span class="o">=</span> <span class="n">fg_kde</span><span class="p">(</span><span class="n">coi</span><span class="p">)</span>
+
+            <span class="n">log_fg_ratios</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">log_fg</span> <span class="o">-</span> <span class="n">log_bg</span><span class="p">)</span>
+        <span class="n">log_fg_ratios</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">log_fg_ratios</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_coinc</span> <span class="o">=</span> <span class="n">coinc</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_log_fg</span> <span class="o">=</span> <span class="n">log_fg_ratios</span><span class="o">.</span><span class="n">squeeze</span><span class="p">()</span>
+
+    <span class="nd">@property</span>
+<div class="viewcode-block" id="RatePosterior.coinc"><a class="viewcode-back" href="../../index.html#rates_tool.rate.RatePosterior.coinc">[docs]</a>    <span class="k">def</span> <span class="nf">coinc</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_coinc</span></div>
+    <span class="nd">@property</span>
+<div class="viewcode-block" id="RatePosterior.log_fg"><a class="viewcode-back" href="../../index.html#rates_tool.rate.RatePosterior.log_fg">[docs]</a>    <span class="k">def</span> <span class="nf">log_fg</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;The log of the foreground to background likelihood ratio.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">_log_fg</span>
+</div>
+    <span class="nd">@property</span>
+<div class="viewcode-block" id="RatePosterior.dtype"><a class="viewcode-back" href="../../index.html#rates_tool.rate.RatePosterior.dtype">[docs]</a>    <span class="k">def</span> <span class="nf">dtype</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;We use the log of the foreground and background rates, under</span>
+<span class="sd">        the names ``log_Rf`` and ``log_Rb`` for parameters.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">dtype</span><span class="p">([(</span><span class="s">&#39;log_Rf&#39;</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">float</span><span class="p">),</span>
+                         <span class="p">(</span><span class="s">&#39;log_Rb&#39;</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">float</span><span class="p">)])</span></div>
+<div class="viewcode-block" id="RatePosterior.to_params"><a class="viewcode-back" href="../../index.html#rates_tool.rate.RatePosterior.to_params">[docs]</a>    <span class="k">def</span> <span class="nf">to_params</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">atleast_1d</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="o">.</span><span class="n">view</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">dtype</span><span class="p">)</span><span class="o">.</span><span class="n">squeeze</span><span class="p">()</span>
+</div>
+<div class="viewcode-block" id="RatePosterior.log_prior"><a class="viewcode-back" href="../../index.html#rates_tool.rate.RatePosterior.log_prior">[docs]</a>    <span class="k">def</span> <span class="nf">log_prior</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">p</span><span class="p">):</span>
+        <span class="sd">r&quot;&quot;&quot;The prior for each rate has a density in rate space of</span>
+
+<span class="sd">        .. math::</span>
+
+<span class="sd">          p(R) \propto \frac{1}{\sqrt{R}}</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">p</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">to_params</span><span class="p">(</span><span class="n">p</span><span class="p">)</span>
+
+        <span class="n">log_Rf</span> <span class="o">=</span> <span class="n">p</span><span class="p">[</span><span class="s">&#39;log_Rf&#39;</span><span class="p">]</span>
+        <span class="n">log_Rb</span> <span class="o">=</span> <span class="n">p</span><span class="p">[</span><span class="s">&#39;log_Rb&#39;</span><span class="p">]</span>
+
+        <span class="c"># p(log(r)) d(log(r)) = p(log(r)) / r = p(r) dr</span>
+        <span class="c"># p(log(r)) = r p(r) = sqrt(r) = exp(0.5*log(r))</span>
+        <span class="c">#</span>
+        <span class="c"># log(p(log(r))) = 0.5*log(r)</span>
+
+        <span class="k">return</span> <span class="mf">0.5</span><span class="o">*</span><span class="p">(</span><span class="n">log_Rf</span> <span class="o">+</span> <span class="n">log_Rb</span><span class="p">)</span>
+</div>
+<div class="viewcode-block" id="RatePosterior.log_likelihood"><a class="viewcode-back" href="../../index.html#rates_tool.rate.RatePosterior.log_likelihood">[docs]</a>    <span class="k">def</span> <span class="nf">log_likelihood</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">p</span><span class="p">):</span>
+        <span class="n">p</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">to_params</span><span class="p">(</span><span class="n">p</span><span class="p">)</span>
+
+        <span class="n">log_Rf</span> <span class="o">=</span> <span class="n">p</span><span class="p">[</span><span class="s">&#39;log_Rf&#39;</span><span class="p">]</span>
+        <span class="n">log_Rb</span> <span class="o">=</span> <span class="n">p</span><span class="p">[</span><span class="s">&#39;log_Rb&#39;</span><span class="p">]</span>
+        
+        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">logaddexp</span><span class="p">(</span><span class="n">log_Rf</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">log_fg</span><span class="p">,</span> <span class="n">log_Rb</span><span class="p">))</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">log_Rf</span><span class="p">)</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">log_Rb</span><span class="p">)</span>
+</div>
+    <span class="k">def</span> <span class="nf">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">p</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Return the log-posterior for the confusion model.</span>
+
+<span class="sd">        &quot;&quot;&quot;</span>
+        
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">log_prior</span><span class="p">(</span><span class="n">p</span><span class="p">)</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">log_likelihood</span><span class="p">(</span><span class="n">p</span><span class="p">)</span></div>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li><a href="../../index.html">Rates Tool 1.0 documentation</a> &raquo;</li>
+          <li><a href="../index.html" >Module code</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2015, Will M. Farr.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.3.
+    </div>
+  </body>
+</html>
