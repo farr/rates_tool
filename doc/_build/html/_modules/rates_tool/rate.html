@@ -139,7 +139,35 @@
 
 <span class="sd">        &quot;&quot;&quot;</span>
         
-        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">log_prior</span><span class="p">(</span><span class="n">p</span><span class="p">)</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">log_likelihood</span><span class="p">(</span><span class="n">p</span><span class="p">)</span></div>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">log_prior</span><span class="p">(</span><span class="n">p</span><span class="p">)</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">log_likelihood</span><span class="p">(</span><span class="n">p</span><span class="p">)</span>
+
+<div class="viewcode-block" id="RatePosterior.log_pbacks"><a class="viewcode-back" href="../../index.html#rates_tool.rate.RatePosterior.log_pbacks">[docs]</a>    <span class="k">def</span> <span class="nf">log_pbacks</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">p</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Returns the log of the probability that each coinc is a</span>
+<span class="sd">        background event.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">p</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">to_params</span><span class="p">(</span><span class="n">p</span><span class="p">)</span>
+
+        <span class="c"># pb = Rb*rhob/(Rf*rhof + Rb*rhob)</span>
+        <span class="c"># pb = Rb/(Rf*rhoratio + Rb)</span>
+
+        <span class="c"># log(pb) = log_Rb - log(Rf*rhoratio + Rb)</span>
+
+        <span class="n">log_Rf</span> <span class="o">=</span> <span class="n">p</span><span class="p">[</span><span class="s">&#39;log_Rf&#39;</span><span class="p">]</span>
+        <span class="n">log_Rb</span> <span class="o">=</span> <span class="n">p</span><span class="p">[</span><span class="s">&#39;log_Rb&#39;</span><span class="p">]</span>
+
+        <span class="k">return</span> <span class="n">log_Rb</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">logaddexp</span><span class="p">(</span><span class="n">log_Rf</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">log_fg</span><span class="p">,</span> <span class="n">log_Rb</span><span class="p">)</span>
+</div>
+<div class="viewcode-block" id="RatePosterior.log_pfores"><a class="viewcode-back" href="../../index.html#rates_tool.rate.RatePosterior.log_pfores">[docs]</a>    <span class="k">def</span> <span class="nf">log_pfores</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">p</span><span class="p">):</span>
+        <span class="sd">&quot;&quot;&quot;Returns the log of the probability that each coinc is a</span>
+<span class="sd">        foreground event.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">p</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">to_params</span><span class="p">(</span><span class="n">p</span><span class="p">)</span>
+
+        <span class="n">log_Rf</span> <span class="o">=</span> <span class="n">p</span><span class="p">[</span><span class="s">&#39;log_Rf&#39;</span><span class="p">]</span>
+        <span class="n">log_Rb</span> <span class="o">=</span> <span class="n">p</span><span class="p">[</span><span class="s">&#39;log_Rb&#39;</span><span class="p">]</span>
+
+        <span class="k">return</span> <span class="n">log_Rf</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">log_fg</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">logaddexp</span><span class="p">(</span><span class="n">log_Rf</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">log_fg</span><span class="p">,</span> <span class="n">log_Rb</span><span class="p">)</span>
+        </div></div>
 </pre></div>
 
           </div>
