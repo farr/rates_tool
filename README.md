@@ -11,8 +11,6 @@ You will need to have installed
 * [Scipy](http://www.numpy.org/)
 * [emcee](https://github.com/dfm/emcee)
 * [plotutils](https://github.com/farr/plotutils)
-* [LALSuite](https://www.lsc-group.phys.uwm.edu/daswg/projects/lalsuite.html)
-  with Python bindings
 
 and (optionally)
 
@@ -20,3 +18,6 @@ and (optionally)
   example.
 * [triangle](https://github.com/dfm/triangle.py)---to make neat plots
   of the fore- and back-ground rates.
+* [LALSuite](https://www.lsc-group.phys.uwm.edu/daswg/projects/lalsuite.html) 
+  with Python bindings if you want to generate synthetic foreground
+  SNRs using the foreground.py module.
