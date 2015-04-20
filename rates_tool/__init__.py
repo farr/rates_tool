@@ -1,1 +1,1 @@
-__all__ = ['foreground', 'kde', 'rate']
+__all__ = ['bf', 'foreground', 'kde', 'rate']

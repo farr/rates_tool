@@ -90,3 +90,31 @@ class RatePosterior(object):
         """
         
         return self.log_prior(p) + self.log_likelihood(p)
+
+    def log_pbacks(self, p):
+        """Returns the log of the probability that each coinc is a
+        background event.
+        """
+        p = self.to_params(p)
+
+        # pb = Rb*rhob/(Rf*rhof + Rb*rhob)
+        # pb = Rb/(Rf*rhoratio + Rb)
+
+        # log(pb) = log_Rb - log(Rf*rhoratio + Rb)
+
+        log_Rf = p['log_Rf']
+        log_Rb = p['log_Rb']
+
+        return log_Rb - np.logaddexp(log_Rf + self.log_fg, log_Rb)
+
+    def log_pfores(self, p):
+        """Returns the log of the probability that each coinc is a
+        foreground event.
+        """
+        p = self.to_params(p)
+
+        log_Rf = p['log_Rf']
+        log_Rb = p['log_Rb']
+
+        return log_Rf + self.log_fg - np.logaddexp(log_Rf + self.log_fg, log_Rb)
+        
